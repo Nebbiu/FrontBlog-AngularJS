@@ -1,1 +1,76 @@
-<h1>{{'Hello World'.toUpperCase()}}</h1>
+<section>
+    <!-- Post button for edit and add -->
+    <div class="row">
+        <div class="col-md-6" ng-if="!$ctrl.postSelected">
+            <button class="btn btn-primary" type="submit" name="button" ng-click="$ctrl.edit = !$ctrl.edit">{{ ($ctrl.edit ? 'Annuler' : 'Ecrire un article ')}}</button>
+        </div>
+        <div class="col-md-12" ng-if="$ctrl.postSelected">
+            <button class="btn btn-primary" type="submit" name="button" ng-click="$ctrl.edit = !$ctrl.edit">{{ ($ctrl.edit ? 'Annuler' : 'Editer article ')}}</button>
+
+            <div class="col-md-offset-1 col-md-5" ng-if="$ctrl.postSelected && !$ctrl.edit">
+                <button class="btn btn-primary" type="submit" name="button" ng-click="$ctrl.postSelected = null">Retour</button>
+            </div>
+
+        </div>
+    </div>
+    <!-- End of button -->
+    <!-- Begin of post preview -->
+
+
+    <div class="row" ng-if="!$ctrl.postSelected && !$ctrl.edit">
+        <div class="card" ng-repeat="post in $ctrl.posts" style="width: 20rem;">
+            <div class="card-block">
+                <div class="col-md-3 text-center">
+                    <h1>{{post.createdAt | date:'dd'}}</h1>
+                    <h3>{{post.createdAt | date:'MM'}}</h3>
+                </div>
+                <div class="col-md-9">
+                    <cite>Par {{post.author}}</cite>
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.body | limitTo : 20}}</p>
+                </div>
+                <a href="#" class="btn btn-primary" ng-click="$ctrl.postSelected = post">Lire la suite</a>
+            </div>
+        </div>
+    </div>
+    <!-- End of post preview -->
+
+    <!-- Begin of post view -->
+
+    <div class="row" ng-if="$ctrl.postSelected && !$ctrl.edit">
+        <div class="col-md-offset-3 col-md-9">
+            <div class="row">
+                <h2 class="col-md-12">{{$ctrl.postSelected.title}}</h2>
+            </div>
+            <div class="row">
+                <cite class="col-md-12">Par {{$ctrl.postSelected.author}} le {{$ctrl.postSelected.createdAt | date}}</cite>
+            </div>
+            <div class="row">
+                <img id="image" class="col-md-4" ng-src="{{$ctrl.postSelected.image}}" ng-if="$ctrl.postSelected.image" />
+            </div>
+            <div class="row">
+                <p class="col-md-12 text">{{$ctrl.postSelected.body | limitTo : 20}}</p>
+            </div>
+        </div>
+    </div>
+    <!-- End of post view -->
+
+    <!--  Begin Edit and Add  -->
+    <form class="form" ng-if="$ctrl.edit" name="frmPost" ng-submit="$ctrl.savePost()">
+        <div class="form-group">
+            <label for="author">Author:</label>
+            <input type="text" class="form-control" id="author" ng-model="$ctrl.postSelected.author" ng-required="true">
+        </div>
+        <div class="form-group">
+            <label for="title">Titre:</label>
+            <input type="text" class="form-control" id="title" ng-model="$ctrl.postSelected.title" ng-required="true">
+        </div>
+        <div class="form-group">
+            <label for="textContent">Contenu:</label>
+            <textarea class="col-md-12 form-group" id="textContent" ng-model="$ctrl.postSelected.body" ng-required="true"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" name="button">Save</button>
+
+    </form>
+     <!-- End of Edit and Add -->
+</section>
