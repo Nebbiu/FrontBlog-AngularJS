@@ -12,7 +12,7 @@
                 savePost() {
                     this.edit = false;
                     if (!this.postSelected.createdAt) {
-
+                        this.postSelected.image = "http://placekitten.com/600/300"
                         this.postSelected.createdAt = Date.now();
                         this.posts.unshift(this.postSelected);
                         this.postSelected = null;

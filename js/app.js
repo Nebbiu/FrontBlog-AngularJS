@@ -30,4 +30,4 @@
     }
   })
 
-})(angular.module('app', ['app.postList', 'app.carousel']));
+})(angular.module('app', ['ui.bootstrap', 'app.postList', 'app.carousel']));
